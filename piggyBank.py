@@ -7,6 +7,8 @@ def show_statement():
 
 def deposit(amount):
     global balance, last_transaction
+    if amount <= 0:
+        return False
     balance += amount
     last_transaction = amount
     show_statement()
@@ -14,7 +16,7 @@ def deposit(amount):
     
 def withdraw(amount):
     global balance, last_transaction
-    if amount > balance:
+    if amount > balance or amount < 0:
         return False
     balance -= amount
     last_transaction = -amount
@@ -33,7 +35,11 @@ while True:
         print("Enter the amount you want to desposit:")
         amount = float(input())
         done = deposit(amount)
+        if not done:
+            print("Illegal amount to deposit.")
     elif choice == 3:
         print("Enter the amount you want to withdraw:")
         amount = float(input())
         done = withdraw(amount)
+        if not done:
+            print("Amount to withdraw is greater than currrent balance.")   
